@@ -19,7 +19,7 @@ function divide(valueA, valueB) {
 function appendMiddle() {
     // console.log("appendBody");
     queryMiddle.appendChild(buttonStart);
-    queryMiddle.appendChild(buttonClear);
+    // queryMiddle.appendChild(buttonClear);
 };
 
 // main
@@ -55,9 +55,9 @@ buttonStart.addEventListener("click", () => {
     }
 });
 
-const buttonClear = document.createElement("button");
-buttonClear.className = "buttonClear";
-buttonClear.textContent = "Clear";
+// const buttonClear = document.createElement("button");
+// buttonClear.className = "buttonClear";
+// buttonClear.textContent = "Clear";
 
 appendMiddle();
 
