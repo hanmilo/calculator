@@ -1,0 +1,37 @@
+* {
+    box-sizing: border-box;
+}
+
+body {
+    background-color: lightgrey;
+    display: flex;
+    align-items: left;
+    justify-content: space-between;
+    flex-direction: column;
+}
+
+.subtitle {
+    margin: -1.5em 0 0 0;
+}
+
+a {
+    text-decoration:  none;
+    color: darkslategrey;
+}
+
+#buttonStart {
+    color: darkslategrey;
+}
+
+.bottom {
+    display: flex;
+    /* background-color: #1f2937; */
+    justify-content: space-between;
+    flex: auto;
+    border-radius: 8px;
+    color: #e5e7eb;
+    text-align: center;
+    /* padding: 15px; */
+    /* font-size: 14px; */
+    gap: 1em;
+}
