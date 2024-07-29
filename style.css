@@ -24,6 +24,25 @@ a {
     color: darkslategrey;
 }
 
+.middle{
+    flex-direction: column;
+    display: flex;
+    gap: 0.25em;
+    align-items: start;
+    justify-content: space-between;
+    background-color: beige;
+    border-radius: 4px;
+}
+
+.padRow-1,
+.padRow-2,
+.padRow-3,
+.padRow-4 {
+    display: flex;
+    gap: 0.25em;
+    width: 150px;
+}
+
 .bottom {
     display: flex;
     /* background-color: #1f2937; */
