@@ -10,6 +10,11 @@ body {
     flex-direction: column;
 }
 
+button {
+    text-align: center;
+    padding: 1em;
+}
+
 .subtitle {
     margin: -1.5em 0 0 0;
 }

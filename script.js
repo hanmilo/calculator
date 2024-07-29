@@ -39,6 +39,18 @@ function clearAll() {
 
 // main
 const queryMiddle = document.querySelector(".middle");
+const padRow1 = document.createElement("div");
+padRow1.classList = "padRow-1";
+appendMiddle(padRow1);
+const padRow2 = document.createElement("div");
+padRow2.classList = "padRow-2";
+appendMiddle(padRow2);
+const padRow3 = document.createElement("div");
+padRow3.classList = "padRow-3";
+appendMiddle(padRow3);
+const padRow4 = document.createElement("div");
+padRow4.classList = "padRow-4";
+appendMiddle(padRow4);
 
 let indexInput = 0;
 let arrayInput = [];
@@ -46,7 +58,7 @@ let indexCalculate = 0;
 let arrayCalculate = [];
 const arrayOperator = ["=", "+", "-", "*", "/"];
 const arrayFunctionOperator = [calculate, add, subtract, multiply, divide];
-const arrayCalculatorKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "clear"];
+const arrayCalculatorKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "C"];
 const arrayCalculatorPad = arrayCalculatorKeys.concat(arrayOperator);
 var answer = 0;
 var operator = "+";
@@ -57,16 +69,6 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
     buttonPad.className = "buttonPad";
     buttonPad.textContent = arrayCalculatorPad[i];
     buttonPad.addEventListener("click", () => {
-        // input = prompt("calculate: ", "0 + 0");
-        // arrayCalculate = input.split(" ");
-        // valueA = arrayCalculate[0];
-        // operator = arrayCalculate[1];
-        // valueB = arrayCalculate[2];
-        // valueA = Number(prompt("1st Number", 0));
-        // operator = prompt("Operator", "+");
-        // valueB = Number(prompt("2nd Number", 0));
-
-        // console.log(typeof Number(arrayCalculatorPad));
         if (i < 10) {   // Number button pressed
             arrayInput[indexInput] = arrayCalculatorPad[i];
             console.log(arrayInput);
@@ -79,7 +81,7 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
             arrayCalculate[indexCalculate] = Number(arrayInput.join(""));
             // indexCalculate++;
             answer = calculate(arrayCalculate[0], arrayCalculate[1], operator);
-                alert(arrayCalculate[0] + " " + operator + " " + arrayCalculate[1] + " = " + answer);
+            alert(arrayCalculate[0] + " " + operator + " " + arrayCalculate[1] + " = " + answer);
             clearAll();
         }
         else {  // operator button pressed
@@ -93,7 +95,19 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
             indexInput = 0;
         };
     });
-    appendMiddle(buttonPad);
+
+    if (i < 4) {
+        padRow1.appendChild(buttonPad);
+    }
+    else if (i < 8) {
+        padRow2.appendChild(buttonPad);
+    }
+    else if (i < 12) {
+        padRow3.appendChild(buttonPad);
+    }
+    else {
+        padRow4.appendChild(buttonPad);
+    };
 };
 
 
