@@ -109,7 +109,7 @@ let arrayOperatorInput = [];
 let indexOperatorInput = 0;
 
 const arrayKeyPadNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-const arrayKeyPadOperator = ["=", "+", "-", "x", "÷", "AC", "±", "%"];
+const arrayKeyPadOperator = ["=", "+", "-", "x", "÷", "AC", "±", "%", ".", " "];
 // genKeyPad(arrayKeyPadNumbers.concat(arrayKeyPadOperator));
 
 const arrayOperator = ["=", "+", "-", "x", "÷"];
@@ -175,13 +175,13 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
         displayRow1.appendChild(displayInput);
     });
 
-    if (arrayCalculatorPad[i] == "AC" || arrayCalculatorPad[i] == "±" || arrayCalculatorPad[i] == "%" || arrayCalculatorPad[i] == "+") {
+    if (arrayCalculatorPad[i] == "AC" || arrayCalculatorPad[i] == 7 || arrayCalculatorPad[i] == 4 || arrayCalculatorPad[i] == 1 || arrayCalculatorPad[i] == 0) {
         padRow1.appendChild(buttonPad);
     }
-    else if (arrayCalculatorPad[i] == 7 || arrayCalculatorPad[i] == 8 || arrayCalculatorPad[i] == 9 || arrayCalculatorPad[i] == "-") {
+    else if (arrayCalculatorPad[i] == "±" || arrayCalculatorPad[i] == 8 || arrayCalculatorPad[i] == 5 || arrayCalculatorPad[i] == 2 || arrayCalculatorPad[i] == " ") {
         padRow2.appendChild(buttonPad);
     }
-    else if (arrayCalculatorPad[i] == 4 || arrayCalculatorPad[i] == 5 || arrayCalculatorPad[i] == 6 || arrayCalculatorPad[i] == "x") {
+    else if (arrayCalculatorPad[i] == "%" || arrayCalculatorPad[i] == 9 || arrayCalculatorPad[i] == 6 || arrayCalculatorPad[i] == 3 || arrayCalculatorPad[i] == ".") {
         padRow3.appendChild(buttonPad);
     }
     else if (arrayCalculatorPad[i] == 1 || arrayCalculatorPad[i] == 2 || arrayCalculatorPad[i] == 3 || arrayCalculatorPad[i] == "÷") {
