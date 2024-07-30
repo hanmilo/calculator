@@ -25,11 +25,11 @@ a {
 }
 
 .middle{
-    flex-direction: column;
+    /* flex-direction: column; */
     display: flex;
     gap: 0.25em;
     align-items: start;
-    justify-content: space-between;
+    /* justify-content: space-between; */
     background-color: beige;
     border-radius: 4px;
 }
@@ -38,9 +38,10 @@ a {
 .padRow-2,
 .padRow-3,
 .padRow-4 {
+    flex-direction: column;
     display: flex;
     gap: 0.25em;
-    width: 150px;
+    width: 100px;
 }
 
 .bottom {

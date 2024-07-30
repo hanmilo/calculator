@@ -65,9 +65,6 @@ function clearAll() {
 
 // main
 const queryMiddle = document.querySelector(".middle");
-const displayRow1 = document.createElement("div");
-displayRow1.classList = "displayRow-1";
-appendMiddle(displayRow1);
 const padRow1 = document.createElement("div");
 padRow1.classList = "padRow-1";
 appendMiddle(padRow1);
@@ -80,6 +77,9 @@ appendMiddle(padRow3);
 const padRow4 = document.createElement("div");
 padRow4.classList = "padRow-4";
 appendMiddle(padRow4);
+const displayRow1 = document.createElement("div");
+displayRow1.classList = "displayRow-1";
+appendMiddle(displayRow1);
 
 let indexInput = 0;
 let arrayInput = [];
