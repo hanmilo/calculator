@@ -28,7 +28,7 @@ function multiply(valueA, valueB) {
 };
 
 function divide(valueA, valueB) {
-    return valueA / valueB;
+    return Math.round(multiply(valueA, Math.pow(10, 6)) / valueB) / Math.pow(10, 6);
 };
 
 function calculate(arrayValues, arrayOperatorInput) {
@@ -39,7 +39,7 @@ function calculate(arrayValues, arrayOperatorInput) {
         for (let i = 1; i < arrayOperator.length; i++) {
             if (arrayOperatorInput[indexOperatorInput] == arrayOperator[i]) {
                 answer = arrayFunctionOperator[i](arrayValuesHolder[0], arrayValuesHolder[1]);
-                arrayValues.splice(0, 1, answer);
+                arrayValues.splice(0, 2, answer);
             };
         };
     };
@@ -51,13 +51,15 @@ function appendMiddle(appendItem) {
     queryMiddle.appendChild(appendItem);
 };
 
-function clearAll() {
+function clearAll(mode) {
+    if (mode == "clearAll") {
+        indexShow = 0;
+        arrayShow = [];
+    };
     indexInput = 0;
     arrayInput = [];
     indexCalculate = 0;
     arrayCalculate = [];
-    indexShow = 0;
-    arrayShow = [];
     answer = 0;
     arrayOperatorInput = [];
     indexOperatorInput = 0;
@@ -89,7 +91,7 @@ let indexShow = 0;
 let arrayShow = [];
 let arrayOperatorInput = [];
 let indexOperatorInput = 0;
-const arrayOperator = ["=", "+", "-", "*", "/"];
+const arrayOperator = ["=", "+", "-", "x", "÷"];
 const arrayFunctionOperator = [calculate, add, subtract, multiply, divide];
 const arrayCalculatorKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "C"];
 const arrayCalculatorPad = arrayCalculatorKeys.concat(arrayOperator);
@@ -114,7 +116,7 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
             indexShow++;
         }
         else if (i == 10) { // "clear" button pressed
-            clearAll();
+            clearAll("clearAll");
         }
         else if (i == 11) { // "=" button pressed
             arrayCalculate[indexCalculate] = Number(arrayInput.join(""));
@@ -123,8 +125,10 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
             arrayShow[indexShow] = "=";
             indexShow++;
             arrayShow[indexShow] = answer;
-            // alert(arrayCalculate[0] + " " + operator + " " + arrayCalculate[1] + " = " + answer);
-            // clearAll();
+            indexShow++;
+            arrayShow[indexShow] = ",\n";
+            indexShow++;
+            clearAll();
         }
         else {  // operator button pressed
             arrayCalculate[indexCalculate] = Number(arrayInput.join(""));
@@ -139,7 +143,7 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
             arrayInput = [];
             indexInput = 0;
         };
-        console.log(arrayShow);
+        // console.log(arrayShow);
 
         displayInput.textContent = arrayShow.join("");
         displayRow1.appendChild(displayInput);

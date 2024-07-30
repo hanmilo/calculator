@@ -44,6 +44,15 @@ a {
     width: 100px;
 }
 
+.displayRow-1 {
+    flex-direction: column;
+    padding: 1em;
+    align-items: center;
+    background-color: darkslategrey;
+    color: whitesmoke;
+    border-radius: 4px;
+}
+
 .bottom {
     display: flex;
     /* background-color: #1f2937; */
