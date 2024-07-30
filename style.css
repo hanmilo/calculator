@@ -26,6 +26,7 @@ a {
 
 .top {
     align-items: flex-start;
+    margin-top: 5em;
 }
 
 .middle {
@@ -49,13 +50,23 @@ a {
 }
 
 .displayRow-1 {
-    flex-direction: column;
+    /* flex-direction: column; */
     padding: 1em;
     align-items: center;
     background-color: darkslategrey;
     color: whitesmoke;
     border-radius: 4px;
 }
+
+/* .divGridRow {
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+.divGridBox {
+    flex: auto;
+} */
 
 .bottom {
     display: flex;

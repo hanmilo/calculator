@@ -31,6 +31,29 @@ function calculate(arrayValues, arrayOperatorInput) {
 };
 
 // functions in background
+function genKeyPad(arrayKeyPad) {
+    // console.log("genCanvas: Start");
+    // appendMiddle();
+    const sizeKeyPad = 5;
+    let index = 0;
+
+    for (let y = 1; y <= sizeKeyPad; y++) {
+        const divGridRow = document.createElement("div");
+        divGridRow.className = "divGridRow";
+        for (let x = 1; x <= sizeKeyPad; x++) {
+            const divGridBox = document.createElement("div");
+            divGridBox.className = "divGridBox";
+            divGridBox.textContent = arrayKeyPad[index];
+            index++;
+
+            divGridRow.appendChild(divGridBox);
+        }
+        appendMiddle(divGridRow);
+    }
+    // queryBody.appendChild(divCanvas);
+    // console.log("genCanvas: End");
+};
+
 function appendTop(appendItem) {
     queryTop.appendChild(appendItem);
 };
@@ -72,6 +95,9 @@ appendMiddle(padRow3);
 const padRow4 = document.createElement("div");
 padRow4.classList = "padRow-4";
 appendMiddle(padRow4);
+const padRow5 = document.createElement("div");
+padRow5.classList = "padRow-5";
+appendMiddle(padRow5);
 
 let indexInput = 0;
 let arrayInput = [];
@@ -81,10 +107,18 @@ let indexShow = 0;
 let arrayShow = [];
 let arrayOperatorInput = [];
 let indexOperatorInput = 0;
+
+const arrayKeyPadNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
+const arrayKeyPadOperator = ["=", "+", "-", "x", "÷", "AC", "±", "%"];
+// genKeyPad(arrayKeyPadNumbers.concat(arrayKeyPadOperator));
+
 const arrayOperator = ["=", "+", "-", "x", "÷"];
 const arrayFunctionOperator = [calculate, add, subtract, multiply, divide];
-const arrayCalculatorKeys = ["1", "2", "3", "4", "5", "6", "7", "8", "9", "0", "AC"];
-const arrayCalculatorPad = arrayCalculatorKeys.concat(arrayOperator);
+
+const arrayCalculatorKeys = [1, 2, 3, 4, 5, 6, 7, 8, 9, 0, "AC"];
+
+const arrayCalculatorPad = arrayKeyPadNumbers.concat(arrayKeyPadOperator);
+// arrayCalculatorKeys.concat(arrayOperator);
 var answer = 0;
 // console.log(arrayCalculator);
 
@@ -93,23 +127,25 @@ displayInput.classList = "displayInput";
 // displayInput.textContent = arrayInput;
 // displayRow1.appendChild(displayInput);
 
+
 for (let i = 0; i < arrayCalculatorPad.length; i++) {
     const buttonPad = document.createElement("button");
     buttonPad.classList = "buttonPad";
     buttonPad.textContent = arrayCalculatorPad[i];
     buttonPad.addEventListener("click", () => {
-        if (i < 10) {   // Number button pressed
+        if (typeof arrayCalculatorPad[i] == "number" ) {   // Number button pressed
             arrayInput[indexInput] = arrayCalculatorPad[i];
             arrayShow[indexShow] = arrayInput[indexInput];
 
             indexInput++;
             indexShow++;
         }
-        else if (i == 10) { // "clear" button pressed
+        else if (arrayCalculatorPad[i] == "AC") { // "clear" button pressed
             clearAll("clearAll");
         }
-        else if (i == 11) { // "=" button pressed
+        else if (arrayCalculatorPad[i] == "=") { // "=" button pressed
             arrayCalculate[indexCalculate] = Number(arrayInput.join(""));
+            // Number(arrayInput.join(""));
             // indexCalculate++;
             answer = calculate(arrayCalculate, arrayOperatorInput);
             arrayShow[indexShow] = "=";
@@ -139,17 +175,20 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
         displayRow1.appendChild(displayInput);
     });
 
-    if (i < 4) {
+    if (arrayCalculatorPad[i] == "AC" || arrayCalculatorPad[i] == "±" || arrayCalculatorPad[i] == "%" || arrayCalculatorPad[i] == "+") {
         padRow1.appendChild(buttonPad);
     }
-    else if (i < 8) {
+    else if (arrayCalculatorPad[i] == 7 || arrayCalculatorPad[i] == 8 || arrayCalculatorPad[i] == 9 || arrayCalculatorPad[i] == "-") {
         padRow2.appendChild(buttonPad);
     }
-    else if (i < 12) {
+    else if (arrayCalculatorPad[i] == 4 || arrayCalculatorPad[i] == 5 || arrayCalculatorPad[i] == 6 || arrayCalculatorPad[i] == "x") {
         padRow3.appendChild(buttonPad);
     }
-    else {
+    else if (arrayCalculatorPad[i] == 1 || arrayCalculatorPad[i] == 2 || arrayCalculatorPad[i] == 3 || arrayCalculatorPad[i] == "÷") {
         padRow4.appendChild(buttonPad);
+    }
+    else {
+        padRow5.appendChild(buttonPad);
     };
 };
 
