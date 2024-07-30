@@ -1,20 +1,4 @@
 // functions in calculator
-// function add(arrayValues) {
-//     return arrayValues.reduce((result, currentValue) => result + currentValue, 0);
-// };
-
-// function subtract(arrayValues) {
-//     return arrayValues.reduce((result, currentValue) => result - currentValue, 0);
-// };
-
-// function multiply(arrayValues) {
-//     return arrayValues.reduce((result, currentValue) => result * currentValue, 0);
-// };
-
-// function divide(arrayValues) {
-//     return arrayValues.reduce((result, currentValue) => result / currentValue, 0);
-// };
-
 function add(valueA, valueB) {
     return valueA + valueB;
 };
@@ -47,6 +31,10 @@ function calculate(arrayValues, arrayOperatorInput) {
 };
 
 // functions in background
+function appendTop(appendItem) {
+    queryTop.appendChild(appendItem);
+};
+
 function appendMiddle(appendItem) {
     queryMiddle.appendChild(appendItem);
 };
@@ -66,6 +54,11 @@ function clearAll(mode) {
 }
 
 // main
+const queryTop = document.querySelector(".top");
+const displayRow1 = document.createElement("div");
+displayRow1.classList = "displayRow-1";
+appendTop(displayRow1);
+
 const queryMiddle = document.querySelector(".middle");
 const padRow1 = document.createElement("div");
 padRow1.classList = "padRow-1";
@@ -79,9 +72,6 @@ appendMiddle(padRow3);
 const padRow4 = document.createElement("div");
 padRow4.classList = "padRow-4";
 appendMiddle(padRow4);
-const displayRow1 = document.createElement("div");
-displayRow1.classList = "displayRow-1";
-appendMiddle(displayRow1);
 
 let indexInput = 0;
 let arrayInput = [];

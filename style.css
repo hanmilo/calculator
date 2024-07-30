@@ -5,7 +5,7 @@
 body {
     background-color: lightgrey;
     display: flex;
-    align-items: left;
+    align-items: center;
     justify-content: space-between;
     flex-direction: column;
 }
@@ -24,11 +24,15 @@ a {
     color: darkslategrey;
 }
 
-.middle{
+.top {
+    align-items: flex-start;
+}
+
+.middle {
     /* flex-direction: column; */
     display: flex;
     gap: 0.25em;
-    align-items: start;
+    align-items: center;
     /* justify-content: space-between; */
     background-color: beige;
     border-radius: 4px;
