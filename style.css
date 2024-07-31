@@ -37,6 +37,7 @@ a {
     /* justify-content: space-between; */
     background-color: beige;
     border-radius: 4px;
+    padding: 1em;
 }
 
 .padRow-1,
@@ -50,23 +51,35 @@ a {
 }
 
 .displayRow-1 {
-    /* flex-direction: column; */
+    height: 6em;
+    width: 20em;
     padding: 1em;
-    align-items: center;
     background-color: darkslategrey;
     color: whitesmoke;
     border-radius: 4px;
+    text-align: right;
 }
 
-/* .divGridRow {
-    display: flex;
-    flex-direction: column;
-    flex-grow: 1;
+/* Buttons "AC", "±", "%" */
+.buttonPad-color1 {
+    background-color: aqua;
+    border-radius: 4px;
+    font-weight: bold;
 }
 
-.divGridBox {
-    flex: auto;
-} */
+/* Buttons operators */
+.buttonPad-color2 {
+    background-color: lightsalmon;
+    border-radius: 4px;
+    font-weight: bold;
+}
+
+/* Buttons numbers */
+.buttonPad-color3 {
+    background-color: lightsteelblue;
+    border-radius: 4px;
+    /* font-weight: bold; */
+}
 
 .bottom {
     display: flex;

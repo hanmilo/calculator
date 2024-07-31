@@ -1,4 +1,12 @@
-// functions in calculator
+// functions for calculator
+function percent(valueA) {
+    return divide(valueA, 100);
+};
+
+function plusminus(valueA) {
+    return multiply(valueA, -1);
+};
+
 function add(valueA, valueB) {
     return valueA + valueB;
 };
@@ -12,48 +20,28 @@ function multiply(valueA, valueB) {
 };
 
 function divide(valueA, valueB) {
-    return Math.round(multiply(valueA, Math.pow(10, 6)) / valueB) / Math.pow(10, 6);
+    return Math.round(multiply(valueA, Math.pow(10, 9)) / valueB) / Math.pow(10, 9);
 };
 
-function calculate(arrayValues, arrayOperatorInput) {
-    var answer = 0;
-    let arrayValuesHolder = arrayValues;
+function calculate(valueA, valueB, operator) {
+    return arrayFunctionOperator[arrayOperator.indexOf(operator)](valueA, valueB);
+};
 
-    for (let indexOperatorInput = 0; indexOperatorInput < arrayOperatorInput.length; indexOperatorInput++) {
-        for (let i = 1; i < arrayOperator.length; i++) {
-            if (arrayOperatorInput[indexOperatorInput] == arrayOperator[i]) {
-                answer = arrayFunctionOperator[i](arrayValuesHolder[0], arrayValuesHolder[1]);
-                arrayValues.splice(0, 2, answer);
-            };
-        };
+function resetItems(mode) {
+    if (mode === "resetAll") {
+        valueA = 0;
+        valueB = 0;
+        arrayInput = [];
+        operator = "+";
+        needOperator = false;
     };
-    return answer;
-};
+    answer = 0;
+    indexInput = 0;
+    stopDecimal = false;
+    decimalPlace = 1;
+}
 
-// functions in background
-function genKeyPad(arrayKeyPad) {
-    // console.log("genCanvas: Start");
-    // appendMiddle();
-    const sizeKeyPad = 5;
-    let index = 0;
-
-    for (let y = 1; y <= sizeKeyPad; y++) {
-        const divGridRow = document.createElement("div");
-        divGridRow.className = "divGridRow";
-        for (let x = 1; x <= sizeKeyPad; x++) {
-            const divGridBox = document.createElement("div");
-            divGridBox.className = "divGridBox";
-            divGridBox.textContent = arrayKeyPad[index];
-            index++;
-
-            divGridRow.appendChild(divGridBox);
-        }
-        appendMiddle(divGridRow);
-    }
-    // queryBody.appendChild(divCanvas);
-    // console.log("genCanvas: End");
-};
-
+// functions for DOM
 function appendTop(appendItem) {
     queryTop.appendChild(appendItem);
 };
@@ -61,20 +49,6 @@ function appendTop(appendItem) {
 function appendMiddle(appendItem) {
     queryMiddle.appendChild(appendItem);
 };
-
-function clearAll(mode) {
-    if (mode == "clearAll") {
-        indexShow = 0;
-        arrayShow = [];
-    };
-    indexInput = 0;
-    arrayInput = [];
-    indexCalculate = 0;
-    arrayCalculate = [];
-    answer = 0;
-    arrayOperatorInput = [];
-    indexOperatorInput = 0;
-}
 
 // main
 const queryTop = document.querySelector(".top");
@@ -95,85 +69,101 @@ appendMiddle(padRow3);
 const padRow4 = document.createElement("div");
 padRow4.classList = "padRow-4";
 appendMiddle(padRow4);
-// const padRow5 = document.createElement("div");
-// padRow5.classList = "padRow-5";
-// appendMiddle(padRow5);
 
 let indexInput = 0;
 let arrayInput = [];
-let indexCalculate = 0;
-let arrayCalculate = [];
-let indexShow = 0;
-let arrayShow = [];
-let arrayOperatorInput = [];
-let indexOperatorInput = 0;
 
-// const arrayKeyPadNumbers = [0, 1, 2, 3, 4, 5, 6, 7, 8, 9];
-// const arrayKeyPadOperator = ["=", "+", "-", "x", "÷", "AC", "±", "%", "."];
-const arrayKeyPadNumbers = [7, 8, 9, 4, 5, 6, 1, 2, 3, 0];
-const arrayKeyPadOperator = ["÷", "x", "+", "-", "AC", "±", "%", ".", "="];
-// genKeyPad(arrayKeyPadNumbers.concat(arrayKeyPadOperator));
-
-const arrayOperator = ["=", "+", "-", "x", "÷"];
-const arrayFunctionOperator = [calculate, add, subtract, multiply, divide];
-
+const arrayOperator = ["=", "+", "-", "x", "÷", "±", "%"];
+const arrayFunctionOperator = [calculate, add, subtract, multiply, divide, plusminus, percent];
 const arrayCalculatorPad = ["AC", 7, 4, 1, 0, "±", 8, 5, 2, "%", 9, 6, 3, ".", "÷", "x", "+", "-", "="];
+
+var operator = "+";
+var valueA = 0;
+var valueB = 0;
 var answer = 0;
-// console.log(arrayCalculator);
+var needOperator = false;
+var stopDecimal = false;
+var decimalPlace = 1;
 
 const displayInput = document.createElement("h2");
 displayInput.classList = "displayInput";
-// displayInput.textContent = arrayInput;
-// displayRow1.appendChild(displayInput);
-
 
 for (let i = 0; i < arrayCalculatorPad.length; i++) {
     const buttonPad = document.createElement("button");
-    buttonPad.classList = "buttonPad";
     buttonPad.textContent = arrayCalculatorPad[i];
+
     buttonPad.addEventListener("click", () => {
-        if (typeof arrayCalculatorPad[i] == "number" ) {   // Number button pressed
+        if (arrayCalculatorPad[i] == "AC") {
+            resetItems("resetAll");
+        }
+        else if (typeof arrayCalculatorPad[i] === "number") {
             arrayInput[indexInput] = arrayCalculatorPad[i];
-            arrayShow[indexShow] = arrayInput[indexInput];
-
             indexInput++;
-            indexShow++;
         }
-        else if (arrayCalculatorPad[i] == "AC") { // "clear" button pressed
-            clearAll("clearAll");
+        else if (arrayCalculatorPad[i] === ".") {
+            if (!stopDecimal) {
+                if (indexInput === 0) {
+                    arrayInput[indexInput] = "0";
+                    indexInput++;
+                };
+                arrayInput[indexInput] = arrayCalculatorPad[i];
+                indexInput++;
+                stopDecimal = true;
+            }
         }
-        else if (arrayCalculatorPad[i] == "=") { // "=" button pressed
-            arrayCalculate[indexCalculate] = Number(arrayInput.join(""));
-            // Number(arrayInput.join(""));
-            // indexCalculate++;
-            answer = calculate(arrayCalculate, arrayOperatorInput);
-            arrayShow[indexShow] = "=";
-            indexShow++;
-            arrayShow[indexShow] = answer;
-            indexShow++;
-            arrayShow[indexShow] = ",\n";
-            indexShow++;
-            clearAll();
+        else if (arrayCalculatorPad[i] === "±") {
+            answer = plusminus(arrayInput.join(""));
+            arrayInput = [answer];
         }
-        else {  // operator button pressed
-            arrayCalculate[indexCalculate] = Number(arrayInput.join(""));
-            indexCalculate++;
+        else if (arrayCalculatorPad[i] === "%") {
+            answer = percent(arrayInput.join(""));
+            arrayInput = [answer];
+        }
+        else if (arrayCalculatorPad[i] === "÷" || arrayCalculatorPad[i] === "x" || arrayCalculatorPad[i] === "+" || arrayCalculatorPad[i] === "-") {
+            if (needOperator) {
+                valueA = Number(arrayInput.join(""));
+                operator = arrayCalculatorPad[i];
+                needOperator = false;
+                resetItems();
+            }
+            else {
+                valueB = Number(arrayInput.join(""));
+                answer = valueA > valueB ? valueA:valueB;
+                while (answer < 1 && answer > 0) {
+                    answer*10;
+                    decimalPlace *= 10;
+                };
+                valueA = calculate(valueA * decimalPlace, valueB * decimalPlace, operator) / decimalPlace;
+                operator = arrayCalculatorPad[i];
+                arrayInput = [valueA];
+                resetItems();
+            };
+        }
+        else if (arrayCalculatorPad[i] === "=") {
+            valueB = Number(arrayInput.join(""));
+            valueA = calculate(valueA, valueB, operator);
 
-            arrayOperatorInput[indexOperatorInput] = arrayCalculatorPad[i];
-
-            arrayShow[indexShow] = arrayOperatorInput[indexOperatorInput];
-            indexOperatorInput++;
-            indexShow++;
-
-            arrayInput = [];
-            indexInput = 0;
+            needOperator = true;
+            arrayInput = [valueA];
+            resetItems();
         };
-        // console.log(arrayShow);
 
-        displayInput.textContent = arrayShow.join("");
+        displayInput.textContent = arrayInput.join("");
         displayRow1.appendChild(displayInput);
     });
 
+    // Assign different class names to different groups of buttons
+    if (arrayCalculatorPad[i] === "AC" || arrayCalculatorPad[i] === "±" || arrayCalculatorPad[i] === "%") {
+        buttonPad.classList = "buttonPad-color1";
+    }
+    else if (arrayCalculatorPad[i] === "÷" || arrayCalculatorPad[i] === "x" || arrayCalculatorPad[i] === "+" || arrayCalculatorPad[i] === "-" || arrayCalculatorPad[i] === "=") {
+        buttonPad.classList = "buttonPad-color2";
+    }
+    else {
+        buttonPad.classList = "buttonPad-color3";
+    };
+
+    // Sort buttons to designated positions
     if (arrayCalculatorPad[i] === "AC" || arrayCalculatorPad[i] === 7 || arrayCalculatorPad[i] === 4 || arrayCalculatorPad[i] === 1 || arrayCalculatorPad[i] === 0) {
         padRow1.appendChild(buttonPad);
     }
