@@ -33,7 +33,7 @@ a {
     /* flex-direction: column; */
     display: flex;
     gap: 0.25em;
-    align-items: center;
+    align-items: start;
     /* justify-content: space-between; */
     background-color: beige;
     border-radius: 4px;
