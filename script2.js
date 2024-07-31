@@ -4,19 +4,20 @@ function percent(valueA) {
 };
 
 function plusminus(valueA) {
-    return multiply(valueA, -1);
+    return valueA * -1;
+    // return multiply(valueA, -1);
 };
 
 function add(valueA, valueB) {
-    return valueA + valueB;
+    return ((valueA * decimalPlace) + (valueB * decimalPlace)) / decimalPlace;
 };
 
 function subtract(valueA, valueB) {
-    return valueA - valueB;
+    return ((valueA * decimalPlace) - (valueB * decimalPlace)) / decimalPlace;
 };
 
 function multiply(valueA, valueB) {
-    return valueA * valueB;
+    return ((valueA * decimalPlace) * (valueB * decimalPlace)) / (decimalPlace * decimalPlace);
 };
 
 function divide(valueA, valueB) {
@@ -24,22 +25,30 @@ function divide(valueA, valueB) {
 };
 
 function calculate(valueA, valueB, operator) {
+    let valueHold = ((valueA % 1) >= (valueB % 1)) ? valueA % 1:valueB % 1;
+    while (valueHold < 1 && answer > 0) {
+        valueHold *= 10;
+        decimalPlace *= 10;
+    };
     return arrayFunctionOperator[arrayOperator.indexOf(operator)](valueA, valueB);
 };
 
 function resetItems(mode) {
-    if (mode === "resetAll") {
-        valueA = 0;
-        valueB = 0;
-        arrayInput = [];
-        operator = "+";
-        needOperator = false;
-    };
-    answer = 0;
+    if (mode) {
+        if (mode === "resetAll") {
+            valueA = 0;
+            valueB = 0;
+            operator = "+";
+            needOperator = false;
+            display = 0;
+        };
+        answer = 0;
+        stopDecimal = false;
+        decimalPlace = 1;
+    }
     indexInput = 0;
-    stopDecimal = false;
-    decimalPlace = 1;
-}
+    arrayInput = [];
+};
 
 // functions for DOM
 function appendTop(appendItem) {
@@ -72,6 +81,7 @@ appendMiddle(padRow4);
 
 let indexInput = 0;
 let arrayInput = [];
+let display = 0;
 
 const arrayOperator = ["=", "+", "-", "x", "÷", "±", "%"];
 const arrayFunctionOperator = [calculate, add, subtract, multiply, divide, plusminus, percent];
@@ -87,6 +97,8 @@ var decimalPlace = 1;
 
 const displayInput = document.createElement("h2");
 displayInput.classList = "displayInput";
+displayInput.textContent = display;
+displayRow1.appendChild(displayInput);
 
 for (let i = 0; i < arrayCalculatorPad.length; i++) {
     const buttonPad = document.createElement("button");
@@ -99,57 +111,63 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
         else if (typeof arrayCalculatorPad[i] === "number") {
             arrayInput[indexInput] = arrayCalculatorPad[i];
             indexInput++;
+            display = arrayInput.join("");
+            // console.log(arrayInput);
         }
         else if (arrayCalculatorPad[i] === ".") {
             if (!stopDecimal) {
                 if (indexInput === 0) {
-                    arrayInput[indexInput] = "0";
-                    indexInput++;
+                    arrayInput[indexInput] = "0.";
+                }
+                else {
+                    arrayInput.splice(1, 0, arrayCalculatorPad[i]);
                 };
-                arrayInput[indexInput] = arrayCalculatorPad[i];
                 indexInput++;
+                display = arrayInput.join("");
                 stopDecimal = true;
-            }
+            };
         }
         else if (arrayCalculatorPad[i] === "±") {
             answer = plusminus(arrayInput.join(""));
-            arrayInput = [answer];
+            if (answer !== 0) {
+                resetItems();
+                arrayInput[indexInput] = answer;
+                indexInput++;
+                display = arrayInput.join("");
+            };
         }
         else if (arrayCalculatorPad[i] === "%") {
             answer = percent(arrayInput.join(""));
             arrayInput = [answer];
+            display = arrayInput.join("");
         }
-        else if (arrayCalculatorPad[i] === "÷" || arrayCalculatorPad[i] === "x" || arrayCalculatorPad[i] === "+" || arrayCalculatorPad[i] === "-") {
+        else if (arrayCalculatorPad[i] === "÷" || arrayCalculatorPad[i] === "x" || arrayCalculatorPad[i] === "+" || arrayCalculatorPad[i] === "-") {            
             if (needOperator) {
-                valueA = Number(arrayInput.join(""));
+                valueA = display;
                 operator = arrayCalculatorPad[i];
                 needOperator = false;
-                resetItems();
+                display = valueA;
+                resetItems("resetPartial");
             }
             else {
                 valueB = Number(arrayInput.join(""));
-                answer = valueA > valueB ? valueA:valueB;
-                while (answer < 1 && answer > 0) {
-                    answer*10;
-                    decimalPlace *= 10;
-                };
-                valueA = calculate(valueA * decimalPlace, valueB * decimalPlace, operator) / decimalPlace;
+                valueA = calculate(valueA, valueB, operator);
+
                 operator = arrayCalculatorPad[i];
-                arrayInput = [valueA];
-                resetItems();
+                display = valueA;
+                resetItems("resetPartial");
             };
         }
         else if (arrayCalculatorPad[i] === "=") {
             valueB = Number(arrayInput.join(""));
             valueA = calculate(valueA, valueB, operator);
-
+            console.log(valueB);
             needOperator = true;
-            arrayInput = [valueA];
-            resetItems();
+            display = valueA;
+            resetItems("resetPartial");
         };
-
-        displayInput.textContent = arrayInput.join("");
-        displayRow1.appendChild(displayInput);
+        displayInput.textContent = display;
+        // displayRow1.appendChild(displayInput);
     });
 
     // Assign different class names to different groups of buttons
