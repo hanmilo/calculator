@@ -189,23 +189,36 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
             }
             else {
                 valueB = Number(arrayInput.join(""));
-                valueA = calculate(valueA, valueB, operator);
-                operator = arrayCalculatorPad[i];
-                display = valueA.toFixed(fixedDigits(valueA));
-                // display = valueA;
-                resetItems("resetPartial");
+                if (operator === "÷" && valueB === 0) {
+                    display = "∞ duh...";
+                    operator = arrayCalculatorPad[i];
+                    resetItems("resetPartial");
+                }
+                else {
+                    valueA = calculate(valueA, valueB, operator);
+                    operator = arrayCalculatorPad[i];
+                    display = valueA.toFixed(fixedDigits(valueA));
+                    // display = valueA;
+                    resetItems("resetPartial");
+                };
             };
             displayOperator.textContent = operator;
         }
         else if (arrayCalculatorPad[i] === "=") {
             valueB = Number(arrayInput.join(""));
-            valueA = calculate(valueA, valueB, operator);
-
+            if (operator === "÷" && valueB === 0) {
+                display = "∞ duh...";
+                resetItems("resetPartial");
+            }
+            else {
+                valueA = calculate(valueA, valueB, operator);
+                display = valueA.toFixed(fixedDigits(valueA));
+                // display = valueA;
+                displayOperator.textContent = "";
+                resetItems("resetPartial");
+            };
             needOperator = true;
-            display = valueA.toFixed(fixedDigits(valueA));
-            // display = valueA;
-            displayOperator.textContent = "";
-            resetItems("resetPartial");
+            
         };
         displayInput.textContent = display;
     });
