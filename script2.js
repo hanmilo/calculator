@@ -142,9 +142,12 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
 // console.log(arrayInput);
                 if (indexInput > 0) {
                     indexInput--;
+                    if (indexInput === 0) {
+                        arrayInput[indexInput] = 0;
+                    };
                 }
                 else {
-                    arrayInput[0] = 0;
+                    arrayInput[indexInput] = 0;
                 };
             };
             display = arrayInput.join("");
