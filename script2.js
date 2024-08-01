@@ -98,7 +98,7 @@ let display = 0;
 
 const arrayOperator = ["=", "+", "-", "x", "÷", "±", "%"];
 const arrayFunctionOperator = [calculate, add, subtract, multiply, divide, plusminus, percent];
-const arrayCalculatorPad = ["AC", 7, 4, 1, 0, "±", 8, 5, 2, "del.","%", 9, 6, 3, ".", "÷", "x", "+", "-", "="];
+const arrayCalculatorPad = ["AC", 7, 4, 1, "del.", "±", 8, 5, 2, 0,"%", 9, 6, 3, ".", "÷", "x", "+", "-", "="];
 
 var operator = "+";
 var valueA = 0;
@@ -235,10 +235,10 @@ for (let i = 0; i < arrayCalculatorPad.length; i++) {
     };
 
     // Sort buttons to designated positions
-    if (arrayCalculatorPad[i] === "AC" || arrayCalculatorPad[i] === 7 || arrayCalculatorPad[i] === 4 || arrayCalculatorPad[i] === 1 || arrayCalculatorPad[i] === 0) {
+    if (arrayCalculatorPad[i] === "AC" || arrayCalculatorPad[i] === 7 || arrayCalculatorPad[i] === 4 || arrayCalculatorPad[i] === 1 || arrayCalculatorPad[i] === "del.") {
         padRow1.appendChild(buttonPad);
     }
-    else if (arrayCalculatorPad[i] === "±" || arrayCalculatorPad[i] === 8 || arrayCalculatorPad[i] === 5 || arrayCalculatorPad[i] === 2 ||  arrayCalculatorPad[i] === "del.") {
+    else if (arrayCalculatorPad[i] === "±" || arrayCalculatorPad[i] === 8 || arrayCalculatorPad[i] === 5 || arrayCalculatorPad[i] === 2 ||  arrayCalculatorPad[i] === 0) {
         padRow2.appendChild(buttonPad);
     }
     else if (arrayCalculatorPad[i] === "%" || arrayCalculatorPad[i] === 9 || arrayCalculatorPad[i] === 6 || arrayCalculatorPad[i] === 3 || arrayCalculatorPad[i] === ".") {
